@@ -10,6 +10,7 @@ UNIT = 30
 MAZE_H = 12
 MAZE_W = 12
 
+
 class Mz(tk.Tk, object):
 
     def __init__(self):
@@ -18,7 +19,8 @@ class Mz(tk.Tk, object):
         self.n_actions = len(self.action_space)
         self.n_features = 9
         self.escapeOrigin = np.array([6, 6])
-        self.angentOriginList = [np.array([5, 8]), np.array([8, 4]), np.array([5, 3])]
+        self.angentOriginList = [
+            np.array([5, 8]), np.array([8, 4]), np.array([5, 3])]
         self.angentList = []
         self.title('Pursuit-Escape')
         self.geometry('{0}x{1}'.format(MAZE_W * UNIT, (MAZE_H+3) * UNIT))
@@ -26,8 +28,8 @@ class Mz(tk.Tk, object):
 
     def _build_maze(self):
         self.canvas = tk.Canvas(self, bg='white',
-                           height=MAZE_H * UNIT,
-                           width=MAZE_W * UNIT)
+                                height=MAZE_H * UNIT,
+                                width=MAZE_W * UNIT)
 
         # draw grids
         for c in range(0, MAZE_W * UNIT, UNIT):
@@ -36,7 +38,6 @@ class Mz(tk.Tk, object):
         for r in range(0, MAZE_H * UNIT, UNIT):
             x0, y0, x1, y1 = 0, r, MAZE_H * UNIT, r
             self.canvas.create_line(x0, y0, x1, y1)
-
 
         for angentOrigin in self.angentOriginList:
             self.angentList.append(self.canvas.create_rectangle(
@@ -76,10 +77,11 @@ class Mz(tk.Tk, object):
         )
 
         observation = np.array([])
-        observation = np.hstack((observation, (np.array(self.canvas.coords(self.angentList[0])))[:2]))
+        observation = np.hstack(
+            (observation, (np.array(self.canvas.coords(self.angentList[0])))[:2]))
         for angent in self.angentList:
-            observation = np.hstack((observation, np.array(self.canvas.coords(angent))[:2]-np.array(self.canvas.coords(self.escape))[:2]))
-
+            observation = np.hstack((observation, np.array(self.canvas.coords(angent))[
+                                    :2]-np.array(self.canvas.coords(self.escape))[:2]))
 
         observation /= UNIT
         observation = np.hstack((0, observation))
@@ -105,7 +107,8 @@ class Mz(tk.Tk, object):
 
         self.canvas.move(self.angentList[num], base_action[0], base_action[1])
         next_coords = self.canvas.coords(self.angentList[num])
-        _distance = np.sqrt(((np.array(next_coords) - np.array(e))**2).sum()) /UNIT
+        _distance = np.sqrt(
+            ((np.array(next_coords) - np.array(e))**2).sum()) / UNIT
 
         if next_coords == e:
             reward = 2
@@ -130,7 +133,7 @@ class Mz(tk.Tk, object):
         if num == 2:
             _observation = np.hstack((0, _observation))
         else:
-            _observation = np.hstack((num+1,_observation))
+            _observation = np.hstack((num+1, _observation))
 
         if (action == 0) & (s[1] > UNIT):
             reward = -1
@@ -142,7 +145,6 @@ class Mz(tk.Tk, object):
             reward = -1
 
         return _observation, reward, done
-
 
     def doEscape(self):
         n = int(np.random.random()*4)

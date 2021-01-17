@@ -8,6 +8,7 @@ if sys.version_info.major == 2:
 else:
     import tkinter as tk
 
+
 def run_mz():
     step = 0
     for episode in range(300):
@@ -29,7 +30,7 @@ def run_mz():
             RL.store_transition(observation, action, reward, observation_)
 
             if (step > 200) and (step % 5 == 0):
-                    RL.learn()
+                RL.learn()
 
             # swap observation
             observation = observation_
@@ -44,10 +45,11 @@ def run_mz():
 if __name__ == "__main__":
     # maze game
     env = Mz()
-    env.sgg = tk.Label(text="learning_rate:0.1  reward_deacy=0.8  e_greedy=0.8")
-    env.sgg.pack(side = tk.TOP)
+    env.sgg = tk.Label(
+        text="learning_rate:0.1  reward_deacy=0.8  e_greedy=0.8")
+    env.sgg.pack(side=tk.TOP)
     env.sgg2 = tk.Label(text="replace_target_iter=200 memory_size=2000")
-    env.sgg2.pack(side = tk.TOP)
+    env.sgg2.pack(side=tk.TOP)
     RL = DeepQNetwork(env.n_actions, env.n_features,
                       learning_rate=0.1,
                       reward_decay=0.8,

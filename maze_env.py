@@ -23,8 +23,8 @@ class Maze(tk.Tk, object):
 
     def _build_maze(self):
         self.canvas = tk.Canvas(self, bg='white',
-                           height=MAZE_H * UNIT,
-                           width=MAZE_W * UNIT)
+                                height=MAZE_H * UNIT,
+                                width=MAZE_W * UNIT)
 
         # create grids
         for c in range(0, MAZE_W * UNIT, UNIT):
@@ -88,7 +88,8 @@ class Maze(tk.Tk, object):
             if s[0] > UNIT:
                 base_action[0] -= UNIT
 
-        self.canvas.move(self.rect, base_action[0], base_action[1])  # move agent
+        self.canvas.move(
+            self.rect, base_action[0], base_action[1])  # move agent
 
         next_coords = self.canvas.coords(self.rect)  # next state
 
@@ -102,11 +103,10 @@ class Maze(tk.Tk, object):
         else:
             reward = 0
             done = False
-        s_ = (np.array(next_coords[:2]) - np.array(self.canvas.coords(self.oval)[:2]))/(MAZE_H*UNIT)
+        s_ = (np.array(
+            next_coords[:2]) - np.array(self.canvas.coords(self.oval)[:2]))/(MAZE_H*UNIT)
         return s_, reward, done
 
     def render(self):
         time.sleep(0.01)
         self.update()
-
-
