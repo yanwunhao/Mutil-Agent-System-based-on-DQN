@@ -8,6 +8,7 @@ importlib-metadata==3.4.0
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.2
 Markdown==3.3.3
+matplotlib==3.9.1
 mock==4.0.3
 numpy==1.19.5
 protobuf==3.14.0
